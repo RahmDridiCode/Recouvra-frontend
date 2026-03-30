@@ -1,0 +1,50 @@
+<div class="app-container">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>Recouvra+</h2>
+      <span class="role-badge">{{ role() }}</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a routerLink="/dashboard" routerLinkActive="active">
+        <span class="nav-icon">📊</span> Tableau de bord
+      </a>
+
+      @if (isAdmin()) {
+        <a routerLink="/users" routerLinkActive="active">
+          <span class="nav-icon">👥</span> Utilisateurs
+        </a>
+      }
+
+      <a routerLink="/clients" routerLinkActive="active">
+        <span class="nav-icon">🏢</span> Clients
+      </a>
+
+      <a routerLink="/invoices" routerLinkActive="active">
+        <span class="nav-icon">📄</span> Factures
+      </a>
+
+      <a routerLink="/payments" routerLinkActive="active">
+        <span class="nav-icon">💳</span> Paiements
+      </a>
+
+      <a routerLink="/recovery-actions" routerLinkActive="active">
+        <span class="nav-icon">🔔</span> Actions de recouvrement
+      </a>
+
+      <a routerLink="/statistics" routerLinkActive="active">
+        <span class="nav-icon">📈</span> Statistiques
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <span class="user-name">{{ user()?.name }}</span>
+        <span class="user-email">{{ user()?.email }}</span>
+      </div>
+      <button class="btn-logout" (click)="logout()">Déconnexion</button>
+    </div>
+  </aside>
+  <main class="main-content">
+    <router-outlet />
+  </main>
+</div>
+

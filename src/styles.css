@@ -1,0 +1,232 @@
+/* === Global Styles === */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f8fafc;
+  color: #334155;
+  line-height: 1.5;
+}
+
+/* === Page Shared Styles === */
+.page { }
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.page-header h1 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 24px;
+}
+
+/* === Buttons === */
+.btn-primary {
+  padding: 10px 20px;
+  background: #0ea5e9;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-primary:hover { background: #0284c7; }
+.btn-primary:disabled { background: #94a3b8; cursor: not-allowed; }
+
+.btn-secondary {
+  padding: 10px 20px;
+  background: #e2e8f0;
+  color: #334155;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-secondary:hover { background: #cbd5e1; }
+
+.btn-sm {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-edit {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+.btn-edit:hover { background: #bfdbfe; }
+
+.btn-delete {
+  background: #fee2e2;
+  color: #dc2626;
+}
+.btn-delete:hover { background: #fecaca; }
+
+.btn-view {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+.btn-view:hover { background: #bae6fd; }
+
+/* === Alerts === */
+.alert-error {
+  background: #fef2f2;
+  color: #dc2626;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  border: 1px solid #fecaca;
+}
+
+.alert-success {
+  background: #f0fdf4;
+  color: #16a34a;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  border: 1px solid #bbf7d0;
+}
+
+/* === Form Card === */
+.form-card {
+  background: white;
+  padding: 24px;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  margin-bottom: 24px;
+}
+
+.form-card h2 {
+  margin: 0 0 16px;
+  font-size: 18px;
+  color: #0f172a;
+}
+
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #475569;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56,189,248,0.1);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+/* === Data Table === */
+.data-table {
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  border-collapse: collapse;
+}
+
+.data-table thead {
+  background: #f1f5f9;
+}
+
+.data-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.data-table td {
+  padding: 12px 16px;
+  font-size: 14px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.data-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.data-table .actions {
+  display: flex;
+  gap: 6px;
+}
+
+.data-table .empty {
+  text-align: center;
+  color: #94a3b8;
+  padding: 24px;
+  font-style: italic;
+}
+
+/* === Badges === */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.badge-admin { background: #fef3c7; color: #92400e; }
+.badge-manager { background: #dbeafe; color: #1e40af; }
+.badge-agent { background: #e0e7ff; color: #3730a3; }
+.badge-paid { background: #dcfce7; color: #166534; }
+.badge-unpaid { background: #fef9c3; color: #854d0e; }
+.badge-overdue { background: #fee2e2; color: #991b1b; }
+.badge-email { background: #dbeafe; color: #1e40af; }
+.badge-sms { background: #e0e7ff; color: #3730a3; }
+.badge-phone\ call { background: #fef3c7; color: #92400e; }
+.badge-letter { background: #f3e8ff; color: #6b21a8; }

@@ -1,0 +1,125 @@
+<div class="page">
+  <h1>Statistiques</h1>
+
+  @if (loading) { <p class="loading-text">Chargement...</p> }
+  @if (error) { <div class="alert-error">{{ error }}</div> }
+
+  @if (stats) {
+    <!-- Global Stats -->
+    <section class="section">
+      <h2>Vue globale</h2>
+      <div class="stats-grid">
+        <div class="stat-card blue">
+          <div class="stat-value">{{ stats.totalInvoices }}</div>
+          <div class="stat-label">Total Factures</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-value">{{ stats.paid }}</div>
+          <div class="stat-label">Factures Payées</div>
+        </div>
+        <div class="stat-card orange">
+          <div class="stat-value">{{ stats.unpaid }}</div>
+          <div class="stat-label">Factures Impayées</div>
+        </div>
+        <div class="stat-card red">
+          <div class="stat-value">{{ stats.overdue }}</div>
+          <div class="stat-label">En Retard</div>
+        </div>
+        <div class="stat-card teal">
+          <div class="stat-value">{{ stats.totalClients }}</div>
+          <div class="stat-label">Total Clients</div>
+        </div>
+        <div class="stat-card purple">
+          <div class="stat-value">{{ stats.totalPayments }}</div>
+          <div class="stat-label">Total Paiements</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-value">{{ stats.totalRecoveredAmount | number:'1.2-2' }} €</div>
+          <div class="stat-label">Montant Recouvré</div>
+        </div>
+        <div class="stat-card red">
+          <div class="stat-value">{{ stats.amountStillUnpaid | number:'1.2-2' }} €</div>
+          <div class="stat-label">Reste Impayé</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-value">{{ stats.totalRecoveryActions }}</div>
+          <div class="stat-label">Actions de Recouvrement</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats per Agent -->
+    <section class="section">
+      <h2>Statistiques par Agent</h2>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Agent</th>
+            <th>Clients</th>
+            <th>Factures</th>
+            <th>Payées</th>
+            <th>Impayées</th>
+            <th>En retard</th>
+            <th>Paiements</th>
+            <th>Montant Recouvré</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (a of stats.statsPerAgent; track a.agent.id) {
+            <tr>
+              <td>
+                <strong>{{ a.agent.name }}</strong>
+                <br><small>{{ a.agent.email }}</small>
+              </td>
+              <td>{{ a.clients }}</td>
+              <td>{{ a.totalInvoices }}</td>
+              <td>{{ a.paid }}</td>
+              <td>{{ a.unpaid }}</td>
+              <td>{{ a.overdue }}</td>
+              <td>{{ a.totalPayments }}</td>
+              <td>{{ a.recoveredAmount | number:'1.2-2' }} €</td>
+              <td>{{ a.recoveryActions }}</td>
+            </tr>
+          } @empty {
+            <tr><td colspan="9" class="empty">Aucun agent trouvé</td></tr>
+          }
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Stats per Month -->
+    <section class="section">
+      <h2>Statistiques par Mois (12 derniers mois)</h2>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Mois</th>
+            <th>Factures</th>
+            <th>Montant Factures</th>
+            <th>Payées</th>
+            <th>Impayées</th>
+            <th>En retard</th>
+            <th>Paiements</th>
+            <th>Montant Paiements</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (m of stats.statsPerMonth; track (m.year * 100 + m.month)) {
+            <tr>
+              <td>{{ monthName(m.month) }} {{ m.year }}</td>
+              <td>{{ m.invoices }}</td>
+              <td>{{ m.invoiceAmount | number:'1.2-2' }} €</td>
+              <td>{{ m.paid }}</td>
+              <td>{{ m.unpaid }}</td>
+              <td>{{ m.overdue }}</td>
+              <td>{{ m.payments }}</td>
+              <td>{{ m.paymentAmount | number:'1.2-2' }} €</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </section>
+  }
+</div>
+

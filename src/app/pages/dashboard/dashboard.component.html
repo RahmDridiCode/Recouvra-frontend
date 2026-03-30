@@ -1,0 +1,64 @@
+<div class="dashboard">
+  <h1>Tableau de bord</h1>
+  <p class="welcome">Bienvenue, <strong>{{ user()?.name }}</strong> — Rôle : <span class="role">{{ role() }}</span></p>
+
+  @if (loading) {
+    <p class="loading-text">Chargement des statistiques...</p>
+  }
+
+  @if (stats) {
+    <div class="stats-grid">
+      <div class="stat-card blue">
+        <div class="stat-value">{{ stats.totalInvoices }}</div>
+        <div class="stat-label">Total Factures</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-value">{{ stats.paid }}</div>
+        <div class="stat-label">Factures Payées</div>
+      </div>
+      <div class="stat-card orange">
+        <div class="stat-value">{{ stats.unpaid }}</div>
+        <div class="stat-label">Factures Impayées</div>
+      </div>
+      <div class="stat-card red">
+        <div class="stat-value">{{ stats.overdue }}</div>
+        <div class="stat-label">Factures En retard</div>
+      </div>
+      <div class="stat-card teal">
+        <div class="stat-value">{{ stats.totalClients }}</div>
+        <div class="stat-label">Total Clients</div>
+      </div>
+      <div class="stat-card purple">
+        <div class="stat-value">{{ stats.totalPayments }}</div>
+        <div class="stat-label">Total Paiements</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-value">{{ stats.totalRecoveredAmount | number:'1.2-2' }} €</div>
+        <div class="stat-label">Montant Recouvré</div>
+      </div>
+      <div class="stat-card red">
+        <div class="stat-value">{{ stats.amountStillUnpaid | number:'1.2-2' }} €</div>
+        <div class="stat-label">Montant Impayé</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-value">{{ stats.totalRecoveryActions }}</div>
+        <div class="stat-label">Actions de Recouvrement</div>
+      </div>
+    </div>
+
+    <div class="quick-actions">
+      <h2>Actions rapides</h2>
+      <div class="action-grid">
+        @if (isAdmin()) {
+          <a routerLink="/users" class="action-btn">👥 Gérer Utilisateurs</a>
+          <a routerLink="/clients" class="action-btn">🏢 Gérer Clients</a>
+        }
+        <a routerLink="/invoices" class="action-btn">📄 Voir Factures</a>
+        <a routerLink="/payments" class="action-btn">💳 Voir Paiements</a>
+        <a routerLink="/recovery-actions" class="action-btn">🔔 Actions Recouvrement</a>
+        <a routerLink="/statistics" class="action-btn">📈 Statistiques</a>
+      </div>
+    </div>
+  }
+</div>
+

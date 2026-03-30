@@ -1,0 +1,85 @@
+<div class="page">
+  <div class="page-header">
+    <h1>Factures</h1>
+    @if (canCreate()) {
+      <button class="btn-primary" (click)="openCreate()">+ Nouvelle Facture</button>
+    }
+  </div>
+
+  @if (error) { <div class="alert-error">{{ error }}</div> }
+  @if (success) { <div class="alert-success">{{ success }}</div> }
+
+  @if (showForm) {
+    <div class="form-card">
+      <h2>{{ editingInvoice ? 'Modifier' : 'Créer' }} une facture</h2>
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Client *</label>
+            <select [(ngModel)]="form.client" name="client" required>
+              <option value="">-- Sélectionner --</option>
+              @for (c of clients; track c._id) {
+                <option [value]="c._id">{{ c.name }}</option>
+              }
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Montant (€) *</label>
+            <input type="number" [(ngModel)]="form.amount" name="amount" required min="0" step="0.01" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Date d'échéance *</label>
+            <input type="date" [(ngModel)]="form.dueDate" name="dueDate" required />
+          </div>
+          <div class="form-group">
+            <label>Statut</label>
+            <select [(ngModel)]="form.status" name="status">
+              <option value="unpaid">Impayée</option>
+              <option value="paid">Payée</option>
+              <option value="overdue">En retard</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">{{ editingInvoice ? 'Modifier' : 'Créer' }}</button>
+          <button type="button" class="btn-secondary" (click)="cancel()">Annuler</button>
+        </div>
+      </form>
+    </div>
+  }
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Client</th>
+        <th>Montant</th>
+        <th>Date d'échéance</th>
+        <th>Statut</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (inv of invoices; track inv._id) {
+        <tr>
+          <td>{{ getClientName(inv) }}</td>
+          <td>{{ inv.amount }} €</td>
+          <td>{{ inv.dueDate | date:'dd/MM/yyyy' }}</td>
+          <td><span class="badge badge-{{ inv.status }}">{{ inv.status }}</span></td>
+          <td class="actions">
+            @if (canEdit()) {
+              <button class="btn-sm btn-edit" (click)="openEdit(inv)">Modifier</button>
+            }
+            @if (canDelete()) {
+              <button class="btn-sm btn-delete" (click)="deleteInvoice(inv)">Supprimer</button>
+            }
+          </td>
+        </tr>
+      } @empty {
+        <tr><td colspan="5" class="empty">Aucune facture trouvée</td></tr>
+      }
+    </tbody>
+  </table>
+</div>
+

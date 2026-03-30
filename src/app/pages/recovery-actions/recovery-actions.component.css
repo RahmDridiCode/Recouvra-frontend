@@ -1,0 +1,22 @@
+.info-box {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin: 12px 0;
+  font-size: 13px;
+}
+
+.preview-link {
+  display: inline-block;
+  margin-top: 6px;
+  color: #0284c7;
+  font-weight: 600;
+  font-size: 13px;
+  text-decoration: underline;
+}
+.preview-link:hover {
+  color: #0369a1;
+}
+

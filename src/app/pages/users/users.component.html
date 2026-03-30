@@ -1,0 +1,68 @@
+<div class="page">
+  <div class="page-header">
+    <h1>Gestion des Utilisateurs</h1>
+    <button class="btn-primary" (click)="openCreate()">+ Nouvel Utilisateur</button>
+  </div>
+
+  @if (error) { <div class="alert-error">{{ error }}</div> }
+  @if (success) { <div class="alert-success">{{ success }}</div> }
+
+  @if (showForm) {
+    <div class="form-card">
+      <h2>{{ editingUser ? 'Modifier' : 'Créer' }} un utilisateur</h2>
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>Nom</label>
+          <input [(ngModel)]="form.name" name="name" required />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" [(ngModel)]="form.email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label>Mot de passe {{ editingUser ? '(laisser vide pour ne pas changer)' : '' }}</label>
+          <input type="password" [(ngModel)]="form.password" name="password" [required]="!editingUser" />
+        </div>
+        <div class="form-group">
+          <label>Rôle</label>
+          <select [(ngModel)]="form.role" name="role">
+            <option value="admin">Admin</option>
+            <option value="manager">Manager</option>
+            <option value="agent">Agent</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">{{ editingUser ? 'Modifier' : 'Créer' }}</button>
+          <button type="button" class="btn-secondary" (click)="cancel()">Annuler</button>
+        </div>
+      </form>
+    </div>
+  }
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Rôle</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (user of users; track user._id) {
+        <tr>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td><span class="badge badge-{{ user.role }}">{{ user.role }}</span></td>
+          <td class="actions">
+            <button class="btn-sm btn-edit" (click)="openEdit(user)">Modifier</button>
+            <button class="btn-sm btn-delete" (click)="deleteUser(user)">Supprimer</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr><td colspan="4" class="empty">Aucun utilisateur trouvé</td></tr>
+      }
+    </tbody>
+  </table>
+</div>
+

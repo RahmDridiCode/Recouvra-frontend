@@ -1,0 +1,111 @@
+<div class="page">
+  <div class="page-header">
+    <h1>Paiements</h1>
+    <button class="btn-primary" (click)="openCreate()">+ Nouveau Paiement</button>
+  </div>
+
+  @if (error) { <div class="alert-error">{{ error }}</div> }
+  @if (success) { <div class="alert-success">{{ success }}</div> }
+
+  <!-- ── FORMULAIRE CRÉATION ── -->
+  @if (showCreateForm) {
+    <div class="form-card">
+      <h2>Créer un paiement</h2>
+      <form (ngSubmit)="onCreate()">
+        <div class="form-group">
+          <label>Facture *</label>
+          <select [(ngModel)]="createForm.invoice" name="invoice" required
+                  (ngModelChange)="onInvoiceSelect()">
+            <option value="">-- Sélectionner une facture --</option>
+            @for (inv of invoices; track inv._id) {
+              <option [value]="inv._id">{{ getInvoiceLabel(inv) }}</option>
+            }
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Montant (€) *</label>
+            <input type="number" [(ngModel)]="createForm.amount" name="amount"
+                   required min="0" step="0.01" />
+          </div>
+          <div class="form-group">
+            <label>Méthode *</label>
+            <select [(ngModel)]="createForm.method" name="method" required>
+              <option value="cash">cash</option>
+              <option value="bank transfer">bank transfer</option>
+              <option value="cheque">cheque</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Créer</button>
+          <button type="button" class="btn-secondary" (click)="cancel()">Annuler</button>
+        </div>
+      </form>
+    </div>
+  }
+
+  <!-- ── FORMULAIRE MODIFICATION ── -->
+  @if (showEditForm && editingPayment) {
+    <div class="form-card form-card-edit">
+      <h2>Modifier le paiement</h2>
+      <div class="edit-info">
+        <span>Client : <strong>{{ getClientName(editingPayment) }}</strong></span>
+        <span>Facture : <strong>{{ getInvoiceInfo(editingPayment) }}</strong></span>
+        <span>Date : <strong>{{ editingPayment.date | date:'dd/MM/yyyy' }}</strong></span>
+      </div>
+      <form (ngSubmit)="onUpdate()">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Montant (€) *</label>
+            <input type="number" [(ngModel)]="editForm.amount" name="amount"
+                   required min="0" step="0.01" />
+          </div>
+          <div class="form-group">
+            <label>Méthode *</label>
+            <select [(ngModel)]="editForm.method" name="method" required>
+              <option value="cash">cash</option>
+              <option value="bank transfer">bank transfer</option>
+              <option value="cheque">cheque</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Enregistrer</button>
+          <button type="button" class="btn-secondary" (click)="cancel()">Annuler</button>
+        </div>
+      </form>
+    </div>
+  }
+
+  <!-- ── TABLEAU ── -->
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Client</th>
+        <th>Facture</th>
+        <th>Montant</th>
+        <th>Date</th>
+        <th>Méthode</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (payment of payments; track payment._id) {
+        <tr [class.row-editing]="editingPayment?._id === payment._id">
+          <td>{{ getClientName(payment) }}</td>
+          <td>{{ getInvoiceInfo(payment) }}</td>
+          <td><strong>{{ payment.amount }} €</strong></td>
+          <td>{{ payment.date | date:'dd/MM/yyyy' }}</td>
+          <td>{{ payment.method }}</td>
+          <td class="actions">
+            <button class="btn-sm btn-edit" (click)="openEdit(payment)">✏️ Modifier</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr><td colspan="6" class="empty">Aucun paiement trouvé</td></tr>
+      }
+    </tbody>
+  </table>
+</div>
+
